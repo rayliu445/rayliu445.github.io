@@ -4,16 +4,19 @@
   <meta charset="utf-8">
   
   
-  <title>归档 | rayliu445</title>
+  <title>Caffine+Redi实现二级缓存 | rayliu445</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="怕什么真理无穷,进一步有进一步的欢喜">
-<meta property="og:type" content="website">
-<meta property="og:title" content="rayliu445">
-<meta property="og:url" content="http://example.com/archives/index.html">
+  <meta name="description" content="本地缓存和分布式缓存本地缓存顾名思义就是和程序运行在同一台机器上的缓存,而分布式缓存则指的就是运行在多台机器上的缓存,这么讲只是狭义的理解。 本地缓存的适用场景适合存储一些不会经常改变的数据 分布式缓存的适用场景分布式缓存一般服务分布式服务的业务场景中,但是又不止局限于用作缓存,拿Redis来说举例,项目中需要统计各个站点的流量使用情况,但是有没有必要存储到数据库中,而只是用来展示 为什么需要二级">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Caffine+Redi实现二级缓存">
+<meta property="og:url" content="http://example.com/2024/08/03/Caffine-Redi%E5%AE%9E%E7%8E%B0%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98/index.html">
 <meta property="og:site_name" content="rayliu445">
-<meta property="og:description" content="怕什么真理无穷,进一步有进一步的欢喜">
+<meta property="og:description" content="本地缓存和分布式缓存本地缓存顾名思义就是和程序运行在同一台机器上的缓存,而分布式缓存则指的就是运行在多台机器上的缓存,这么讲只是狭义的理解。 本地缓存的适用场景适合存储一些不会经常改变的数据 分布式缓存的适用场景分布式缓存一般服务分布式服务的业务场景中,但是又不止局限于用作缓存,拿Redis来说举例,项目中需要统计各个站点的流量使用情况,但是有没有必要存储到数据库中,而只是用来展示 为什么需要二级">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-08-03T00:21:09.000Z">
+<meta property="article:modified_time" content="2025-01-18T17:37:48.575Z">
 <meta property="article:author" content="rayliu445">
+<meta property="article:tag" content="Redis">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="rayliu445" type="application/atom+xml">
@@ -69,96 +72,71 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2024" class="archive-year">2024</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2024/11/26/Redis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0%E7%AC%94%E8%AE%B0/" class="archive-article-date">
-  <time class="dt-published" datetime="2024-11-26T13:30:31.000Z" itemprop="datePublished">11月 26</time>
+        <section id="main"><article id="post-Caffine-Redi实现二级缓存" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/08/03/Caffine-Redi%E5%AE%9E%E7%8E%B0%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98/" class="article-date">
+  <time class="dt-published" datetime="2024-08-03T00:21:09.000Z" itemprop="datePublished">2024-08-03</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%BC%93%E5%AD%98/">缓存</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2024/11/26/Redis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0%E7%AC%94%E8%AE%B0/">Redis设计与实现读书笔记</a>
+    <h1 class="p-name article-title" itemprop="headline name">
+      Caffine+Redi实现二级缓存
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2024/11/20/%E5%8A%A0%E5%AF%86%E8%B4%A7%E5%B8%81%E4%BA%A4%E6%98%93%E5%AD%A6%E4%B9%A0/" class="archive-article-date">
-  <time class="dt-published" datetime="2024-11-20T08:43:35.000Z" itemprop="datePublished">11月 20</time>
-</a>
+    <div class="e-content article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2024/11/20/%E5%8A%A0%E5%AF%86%E8%B4%A7%E5%B8%81%E4%BA%A4%E6%98%93%E5%AD%A6%E4%B9%A0/">加密货币交易学习</a>
-    </h1>
-  
+        <h2 id="本地缓存和分布式缓存"><a href="#本地缓存和分布式缓存" class="headerlink" title="本地缓存和分布式缓存"></a>本地缓存和分布式缓存</h2><p>本地缓存顾名思义就是和程序运行在同一台机器上的缓存,而分布式缓存则指的就是运行在多台机器上的缓存,这么讲只是狭义的理解。</p>
+<h2 id="本地缓存的适用场景"><a href="#本地缓存的适用场景" class="headerlink" title="本地缓存的适用场景"></a>本地缓存的适用场景</h2><p>适合存储一些不会经常改变的数据</p>
+<h2 id="分布式缓存的适用场景"><a href="#分布式缓存的适用场景" class="headerlink" title="分布式缓存的适用场景"></a>分布式缓存的适用场景</h2><p>分布式缓存一般服务分布式服务的业务场景中,但是又不止局限于用作缓存,拿Redis来说举例,项目中需要统计各个站点的流量使用情况,但是有没有必要存储到数据库中,而只是用来展示</p>
+<h2 id="为什么需要二级缓存甚至三级缓存"><a href="#为什么需要二级缓存甚至三级缓存" class="headerlink" title="为什么需要二级缓存甚至三级缓存"></a>为什么需要二级缓存甚至三级缓存</h2><p>我个人理解多级缓存的出现是为了服务于对接口响应速度有要求的接口,例如c端的查询接口,Redis也是有开销的。项目的考试业务中有缓存预先存储,然后正式考试再将学生和试卷出题进行绑定,学生请求组卷这个接口的请求时间要求响应要非常快。</p>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2024/08/03/Caffine-Redi%E5%AE%9E%E7%8E%B0%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98/" class="archive-article-date">
-  <time class="dt-published" datetime="2024-08-03T00:21:09.000Z" itemprop="datePublished">8月 3</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2024/08/03/Caffine-Redi%E5%AE%9E%E7%8E%B0%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98/">Caffine+Redi实现二级缓存</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2024/08/02/Canal%E5%AE%9E%E8%B7%B5/" class="archive-article-date">
-  <time class="dt-published" datetime="2024-08-02T15:44:10.000Z" itemprop="datePublished">8月 2</time>
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/08/03/Caffine-Redi%E5%AE%9E%E7%8E%B0%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98/" data-id="cm62h5dit0000y54b9mvu8aui" data-title="Caffine+Redi实现二级缓存" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2024/08/02/Canal%E5%AE%9E%E8%B7%B5/">Canal实践</a>
-    </h1>
-  
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li></ul>
 
-    </header>
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2024/11/20/%E5%8A%A0%E5%AF%86%E8%B4%A7%E5%B8%81%E4%BA%A4%E6%98%93%E5%AD%A6%E4%B9%A0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          加密货币交易学习
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2024/08/02/Canal%E5%AE%9E%E8%B7%B5/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">Canal实践</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
 
 
 </section>
