@@ -12,7 +12,9 @@ English | [中文](./README.md)
     <img src="https://github.com/Charles7c/charles7c.github.io/actions/workflows/deploy-pages.yml/badge.svg">
 </a>
 
+📝 
 
-📝 **This is the charles's personal technology knowledge repositories website.** 
+I used **Charles' personal technical knowledge base project to build my own blog (since it requires username.github.io to access, there is no fork). You can find the original blog through the link**
+
 
 🐢 [GitHub Pages](https://blog.charles7c.top) | 🐇 [Gitee Pages](https://charles7c.gitee.io)
