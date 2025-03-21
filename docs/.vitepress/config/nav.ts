@@ -20,6 +20,12 @@ export const nav: DefaultTheme.Config['nav'] = [
     ],
     activeMatch: '/courses/'
   },
+  {text:'读书笔记',
+    items: [
+      { text: '编程', link: '/notes/code/index', activeMatch: '/notes/code/' },
+      { text: '社科人文', link: '/notes/humanities/index', activeMatch: '/notes/humanities/' }
+    ],
+  },
   {
     text: '我的标签',
     link: '/tags',
