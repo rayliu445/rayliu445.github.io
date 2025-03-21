@@ -52,8 +52,8 @@ java.util.Arrays
 java.lang.Integer
     static int compare(int x ,int y)**如果x<y返回一个负整数;如果x和y相等，则返回0**;否则返回一个正整数。
 java.lang.Double
-    static int compare(double x,double y)**如果x[y返回一个负整数**;如果x和y相等则返回0;否则返回一个正整数。
-注:sgn(x.compareTo(y))=-sgn(y.compare(x))，如果前者有异常的话，那么后者也应该出现异常。这里的“sgn”可以理解为一种规则，即如果x](y%E8%BF%94%E5%9B%9E%E4%B8%80%E4%B8%AA%E8%B4%9F%E6%95%B4%E6%95%B0**;%E5%A6%82%E6%9E%9Cx%E5%92%8Cy%E7%9B%B8%E7%AD%89%E5%88%99%E8%BF%94%E5%9B%9E0;%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E%E4%B8%80%E4%B8%AA%E6%AD%A3%E6%95%B4%E6%95%B0%E3%80%82%0A%E6%B3%A8:sgn(x.compareTo(y))=-sgn(y.compare(x))%EF%BC%8C%E5%A6%82%E6%9E%9C%E5%89%8D%E8%80%85%E6%9C%89%E5%BC%82%E5%B8%B8%E7%9A%84%E8%AF%9D%EF%BC%8C%E9%82%A3%E4%B9%88%E5%90%8E%E8%80%85%E4%B9%9F%E5%BA%94%E8%AF%A5%E5%87%BA%E7%8E%B0%E5%BC%82%E5%B8%B8%E3%80%82%E8%BF%99%E9%87%8C%E7%9A%84%E2%80%9Csgn%E2%80%9D%E5%8F%AF%E4%BB%A5%E7%90%86%E8%A7%A3%E4%B8%BA%E4%B8%80%E7%A7%8D%E8%A7%84%E5%88%99%EF%BC%8C%E5%8D%B3%E5%A6%82%E6%9E%9Cx)y的话，那么结果就是1。
+    static int compare(double x,double y)**如果xy返回一个负整数**;如果x和y相等则返回0;否则返回一个正整数。
+注:sgn(x.compareTo(y))=-sgn(y.compare(x))，如果前者有异常的话，那么后者也应该出现异常。这里的“sgn”可以理解为一种规则，即如果xy的话，那么结果就是1。
 如果Manager扩展了Employee,Employee实现的是Comparable\<Employee>,而在Manager中实现的是Comparble\<Manager>,Employee ep=new Employee(); Manager manager =new Manager();如果是ep.compareTo(manager)，那么没什么问题，因为经理也是员工。但是，如果manager.compareTo(ep),那么就会出现ClassCastException。
 
 ```java
