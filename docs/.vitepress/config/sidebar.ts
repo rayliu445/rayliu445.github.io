@@ -12,7 +12,10 @@ export const sidebar: DefaultTheme.Config['sidebar'] = {
 
   '/courses/java/': getItems("courses/java"),
   '/courses/mysql/': getItems("courses/mysql"),
+  '/courses/web3/': getItems("courses/web3"),
   '/courses/mybatis/': getItems("courses/mybatis"),
+
+  '/notes/code/':getItems("/notes/code")
 }
 
 /**
