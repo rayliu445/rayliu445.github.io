@@ -415,7 +415,7 @@ function _transfer(
 
 ### EVM日志
 
-![1739985836113](image/Solidity学习笔记/1739985836113.png)
+<!-- ![1739985836113](image/Solidity学习笔记/1739985836113.png) -->
 
 ### 主题&数据&data
 
