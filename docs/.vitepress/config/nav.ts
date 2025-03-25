@@ -15,9 +15,9 @@ export const nav: DefaultTheme.Config['nav'] = [
     text: '我的小册',
     items: [
       { text: 'Java生态', link: '/courses/java/index', activeMatch: '/courses/java/' },
-      { text: 'MySQL生态', link: '/courses/mysql/index', activeMatch: '/courses/mysql/' },
+      { text: '数据库相关', link: '/courses/database/index', activeMatch: '/courses/database/' },
       { text: 'Web3生态', link: '/courses/web3/index', activeMatch: '/courses/web3/' },
-      { text: 'MyBatis快速入门', link: '/courses/mybatis/index', activeMatch: '/courses/mybatis/' }
+      { text: '中间件生态', link: '/courses/middleware/index', activeMatch: '/courses/middleware/' }
     ],
     activeMatch: '/courses/'
   },

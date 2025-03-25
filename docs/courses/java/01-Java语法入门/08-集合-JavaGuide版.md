@@ -16,7 +16,6 @@ tags:
 
 集合也被称作容器,主要由两大接口派生而来,一个是Collection接口,另一个是Map接口,主要用于存放键值对。
 
-![](https://gitee.com/aryangzhu/picture/raw/master/java/Java%E9%9B%86%E5%90%88%E4%BD%93%E7%B3%BB.png)
 
 ## 说说List、Set、Queue和Map四者的区别
 
@@ -78,15 +77,15 @@ LinkedHashMap继承自HashMap,所以在**它的底层仍然是基于拉链式散
 
 3.数组存储的数据是有序的、可重复的,特点单一。但是集合提高了数据存储的灵活性,Java集合不仅可以用来存储不同类型不同数量的对象,还可以保存具有映射关系的数据。
 
-# Collection子接口之List
+## Collection子接口之List
 
-## ArrayList与Vector的区别？
+### ArrayList与Vector的区别？
 
 ArrayList是List的主要实现类,底层使用Object[]存储,适用于频繁的查找工作,线程不安全;
 
 Vector是List的古老实现类,底层使用Object[]存储,线程安全的。
 
-## ArrayList与LinkedList区别？
+### ArrayList与LinkedList区别？
 
 1.是否保证**线程安全**:ArrayList和LinkedList都是不同步的,也就是不保证线程安全;
 
@@ -106,9 +105,9 @@ JavaGuide还提到了**RandomAccess**接口,在之前的IO中同样有RandomAcce
 
 ArrayList实现了RandomAccess接口而LinkedList没有实现。因为ArrayList底层是数组,而LinkedList底层是链表。数组天然支持随机访问,而链表不支持。
 
-# Collection的子接口之Set
+## Collection的子接口之Set
 
-## Comparable和Comparator的区别
+### Comparable和Comparator的区别
 
 Comparable接口实际上出自java.lang包,它有一个compareTo(Object obj)方法用来排序。
 
@@ -145,7 +144,7 @@ public class Person implements Comparable<Person>{
 }
 ```
 
-## 无序性和不可重复性的含义是什么
+### 无序性和不可重复性的含义是什么
 
 1.什么是无序性?**无序性不等于随机性,无序性是指存储的数据在底层数组中并非按照数组索引的顺序添加,而是根据数据的哈希值决定的**。
 
@@ -159,9 +158,9 @@ public class Person implements Comparable<Person>{
 
 3.底层数据结构不同导致这三者的应用场景不同。HashSet用于不需要保证元素插入和取出顺序的场景,LinkedHashSet用于保证元素的插入和取出顺序满足FIFO的场景,TreeSet用于支持元素自定义排序规则的场景。
 
-# Collection子接口之Queue
+## Collection子接口之Queue
 
-## Queue与Dequeue的区别
+### Queue与Dequeue的区别
 
 queue是单端队列,只能从一端插入元素,另一端删除元素,实现上一般遵循**先进先出**(FIFO)规则。
 
@@ -188,7 +187,7 @@ Dequeue扩展了Queue的接口,**增加了在队首和队尾进行插入和删�
 
 Deque还提供有push()和pop()等其他方法,可用于模拟栈。
 
-## ArrayDeque与LinkedList的区别
+### ArrayDeque与LinkedList的区别
 
 ArrayDeque和LinkedList都实现了**Deque接口**,两者都具有队列的功能,两者有什么区别呢?
 
@@ -199,7 +198,7 @@ ArrayDeque是在JDK1.6才被引入的,而LinkedList早在JDK1.2时就已经存�
 
 ArrayDeque插入时可能存在扩容过程,不过均摊后的插入操作依然为O(1)。LinkedList每次插入数据都需要申请新的空间,均摊性能相比更慢。
 
-## PriorityQueue
+### PriorityQueue
 
 在JDk1.5中被引入,与Queue的区别在于元素出队顺序是与优先级相关的,即总是优先级最高的元素出队。
 
@@ -209,29 +208,29 @@ ArrayDeque插入时可能存在扩容过程,不过均摊后的插入操作依然
 
 3.PriorityQueue默认是小顶堆,但**可以接受一个Comparator作为构造参数,从而来自定义元素优先级的先后**。
 
-# Map接口
+## Map接口
 
-## HashMap和HashTable的区别
+### HashMap和HashTable的区别
 
-### 1.线程是否安全
+1. 线程是否安全
 
 HashMap是非线程安全的,HashTable是线程安全的,因为HashTable内部的方法基本都经过synchronized修饰。
 
-### 2.效率
+2. 效率
 
 HashMap更加高效一点(因为不用考虑线程安全),而且HashTable基本被淘汰。
 
-### 3.对NULL key和NULL Value的支持
+3. 对NULL key和NULL Value的支持
 
 HashMap可以存储null的key和value,但null作为键只能有一个,null作为值可以有多个;HashTable不允许有null键和null值,否则会抛出NullPointerException。
 
-### 4.初始容量大小和每次扩容量大小的不同
+4. 初始容量大小和每次扩容量大小的不同
 
-1.创建时如果不指定容量初始值,HashTable默认的**初始值为11,之后每次扩容,容量变为原来的2n+1**。HashMap默认的**初始化大小为16**,之后每次扩容,容量变为原来的2倍。
+1.创建时如果不指定容量初始值,HashTable默认的**初始值为11,之后每次扩容,容量变为原来的2n+1**。HashMap默认的**初始化大小为16**,之后每次扩容,容量变为原来的2倍。  
 
-2.创建时如果给定了容量初始值,HashTable会直接使用你给定的大小,而HashMap会将其扩充为2的幂次方大小(HashMap中的tableSizeFor()方法保证),也就是**说HashMap总是使用2的幂作为哈希表的大小**。
+2.创建时如果给定了容量初始值,HashTable会直接使用你给定的大小,而HashMap会将其扩充为2的幂次方大小(HashMap中的tableSizeFor()方法保证),也就是**说HashMap总是使用2的幂作为哈希表的大小**。  
 
-### 5.底层数据结构
+5. 底层数据结构
 
 JDK1.8以后的HashMap在解决哈希冲突时有了较大的变化,当链表长度大于阈值(**默认为8**)(**将链表转换为红黑树前会判断,如果当数组的长度小于64,那么会选择先进性数组扩容,而不是转换为红黑树**)时,将链表转换为红黑树,以减少搜索时间。HashTable没有这样的机制。
 
@@ -269,7 +268,7 @@ public HashMap(int initialCapacity, float loadFactor) {
     }
 ```
 
-## HashMap和HashSet
+### HashMap和HashSet
 
 前面学习Set的子接口的时候,我们已经知道HashSet的底层就是基于HashMap实现的。HashSet的源码非常非常少,因为除了**clone()、writeObject()、readObject()**是HashSet自己需要实现的以外,其他的方法都是直接调用HashMap中的方法。
 
@@ -280,7 +279,7 @@ public HashMap(int initialCapacity, float loadFactor) {
 |      调用 `put()`向 map 中添加元素      |                                              调用 `add()`方法向 `Set` 中添加元素                                              |
 | `HashMap` 使用键（Key）计算 `hashcode` | `HashSet` 使用成员对象来计算 `hashcode` 值，对于两个对象来说 `hashcode` 可能相同，所以 `equals()`方法用来判断对象的相等性 |
 
-## HashMap和TreeMap的区别
+### HashMap和TreeMap的区别
 
 TreeMap和HashMap都继承自**AbstractMap**,但是需要注意的是TreeMap它还实现了Navigable接口和Sorted接口。
 
@@ -302,13 +301,13 @@ public static void main(String[] args){
 
 总结:相比HashMap来说TreeMap主要多了对集合中的元素**根据键值排序的能力以及对集合内元素的搜索能力**。
 
-## HashSet如何检查重复
+### HashSet如何检查重复
 
 当你把对象加入 `HashSet`时，`HashSet` 会先计算对象的 `hashcode`值来判断对象加入的位置，同时也会与其他加入的对象的 `hashcode` 值作比较，如果没有相符的 `hashcode`，`HashSet` 会假设对象没有重复出现。但是如果发现有相同 `hashcode` 值的对象，这时会调用 `equals()`方法来检查 `hashcode` 相等的对象是否真的相同。如果两者相同，`HashSet` 就不会让加入操作成功。
 
 在openJDK8中,实际上无论HashSet中是否已经存在了某元素,HashSet都会直接插入,只是会在add()方法的返回值处告诉我们插入前是否存在相同元素。
 
-### hashCode()与equals()
+#### hashCode()与equals()
 
 1.如果两个对象相等,hashcode一定相等。
 
@@ -320,7 +319,7 @@ public static void main(String[] args){
 
 5.hashcode()在堆上的对象产生独特值。**如果没有重写hashCode(),则该class的两个对象无论如何也不会相等**。
 
-### ==与equals的区别
+#### ==与equals的区别
 
 对于==来说,比较的是值是否相等
 
@@ -328,7 +327,7 @@ public static void main(String[] args){
 
 对于引用类型(包括包装类型)来说,equals如果没有被重写,对比的就是地址;而如果被重写那么对比的就是内容。
 
-## HashMap的底层实现
+### HashMap的底层实现
 
 jdk1.8之前是数组+链表,即**链表散列**。HashMap通过key的hashCode经过扰动函数处理得到hash值,**然后通过(n-1)&hash判断当前元素存放的位置(这里的n指的是数组的长度)**,如果当前位置存在元素的话,就判断该元素与要存入的元素的hash值以及key是否相同,如果相同的话，直接覆盖,不相同就通过拉链法解决冲突。
 
@@ -353,7 +352,7 @@ JDK1.7中源码
 
 拉链法很容易理解:数据结构中也学过,这里不做过多阐述。
 
-## HashMap的长度为什么是2的幂次方
+### HashMap的长度为什么是2的幂次方
 
 为了让HashMap存取高效,需要尽可能地减少碰撞。Hash值的范围为-2147483648到2147483637,前后加起来大概40亿的映射空间,只要哈希函数映射得比较均匀松散,一般很难出现碰撞。但是40亿个地址计算机内存肯定放不下,所以使用模数取余的方法来对应数组存放位置下标(数组+链表),这个数组下标的计算方式是
 
@@ -371,21 +370,21 @@ hash%length
 
 前提是length是2的次方,并且&要%性能更好。
 
-## HashMap多线程导致死循环问题
+### HashMap多线程导致死循环问题
 
 推荐使用ConcurrentHashMap。
 
-## HashMap常见的遍历方式
+### HashMap常见的遍历方式
 
-## ConcurrentHashMap线程安全的具体实现方式/底层具体实现
+### ConcurrentHashMap线程安全的具体实现方式/底层具体实现
 
 主要体现在线程安全的方式上不同。
 
-### 1.底层数据结构
+#### 1.底层数据结构
 
 JDK1.7的ConcurrentHashMap底层采用的是**分段的数组+链表**实现,JDK1.8采用的数据结构跟HashMap1.8的结构一样,数组+链表/红黑二叉树。HashTable和JDK1.8之前的HashMap的底层数据结构类似都是采用数组+链表形式,数组是HashMap的主体,链表则是为了解决哈希冲突而存在的。
 
-### 2.实现线程安全的主要方式(重要)
+#### 2.实现线程安全的主要方式(重要)
 
 1.在JDK1.7的时候,ConcurrentHashMap(分段锁)对整个桶数组进行了**分割分段**(segment),每一把锁只锁容器中一部分数据,多线程访问容器里不同数据端的数据,就不会存在锁竞争,提高了并发访问率。到了JDK1.8之后已经摒弃了Segment,转而采用的是数组+链表+红黑树的数据结构来实现,并发控制使用synchronized和CAS来操作。
 
