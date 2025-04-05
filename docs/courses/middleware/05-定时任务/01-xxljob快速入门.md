@@ -1,11 +1,11 @@
 ---
-title: RabbitMQ快速入门
+title: XXLJOB快速入门
 author: Ray
 date: 2024/3/1 21:21
 categories:
  - 中间件生态
 tags:
- - RabbitMQ
+ - xxljob
 ---
 ## 介绍
 
@@ -43,7 +43,9 @@ public class MyJobHandle {
     }
 }
 ```
+
 ### 配置执行器
+
 ```java
 private Logger logger = LoggerFactory.getLogger(XxlJobConfig.class);
 

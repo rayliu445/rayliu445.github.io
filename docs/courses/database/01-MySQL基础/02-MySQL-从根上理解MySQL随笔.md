@@ -1337,7 +1337,7 @@ serilizable
 
 #### 为什么需要MVCC
 
-首先我们要知道解决各个隔离级别下的并发的问题有两种思路，一种是mvcc，另一种就是锁的方案，但是呢锁的方案会导致并发的性能下降。所以，这个时候MVCC无疑是更加轻量级的选择，但是不是说有了他就可以不用锁，因为它只解决了并发读的问题，但是，如果要并发写入的话，还是需要锁来进行控制。
+首先我们要知道解决各个隔离级别下的并发的问题有两种思路，一种是MVCC，另一种就是锁的方案，但是呢锁的方案会导致并发的性能下降。所以，这个时候MVCC无疑是更加轻量级的选择，但是不是说有了他就可以不用锁，因为它只解决了并发读的问题，但是，如果要并发写入的话，还是需要锁来进行控制。
 
 首先记录中有几个隐藏的字段，trx_id产生当前记录的事务id，row_pointer指向最新一条的undo日志，row_id没有主键id或者唯一索引的时候默认分配的id。
 每次对于数据的操作都会有一条undo日志,记录中用roll_pointer指向最新的一条undo日志
@@ -1358,12 +1358,13 @@ serilizable
 4. creator_trx_id
    生成当前ReadView的trx_id
 
-##### 比较规则
+##### 比较规则(可见性算法)
 
 1. 如果访问的trx_id和creator_id相等,说明访问的就是当前版本,可以访问
 2. 如果trx_id小于min_trxid,说明之前已经提交,可以访问
 3. 如果trx_id大于max_traxid,说明当前记录版本在创建事务之后,不可以访问
-4. 如果trx_id在[min,max]之间,trx_id是否在m_ids列表中,如果在的话说明事务trx_id还是活跃的,没有提交,所以不能被访问
+4. 如果trx_id在[min,max]之间,trx_id是否在m_ids列表中,如果在的话说明事务trx_id还是活跃的,没有提交,所以不能被访问;如果不在，说明创建ReadView时该版本事务已经被提交，该版本可以被访问
+5. 如果当前版本的数据不可见，那么就顺着版本链找到下一个版本的数据，继续按照上面的步骤判断可见性
 
 #### ReadUncommited
 
@@ -1373,6 +1374,81 @@ serilizable
 
 Select之前生成一个ReadView
 trx_id只有在insert,update,delete的时候才会被分配。
+
+下面的例子更加直观  
+
+首先定一个A事务和B事务，分别针对某条记录生成事务id
+
+A事务
+
+```mysql
+Transaction 100
+
+BEGIN;
+
+UPDATE hero SET name = '关羽' WHERE number = 1;
+
+UPDATE hero SET name = '张飞' WHERE number = 1;
+```
+
+![img](https://raw.githubusercontent.com/rayliu445/blogImage/master/blogImage/mvcc%E8%AF%BB%E5%B7%B2%E6%8F%90%E4%BA%A4%E6%9F%A5%E8%AF%A2120250406.png)
+
+B事务
+
+```mysql
+# Transaction 200
+BEGIN;
+# 更新了一些别的表的记录
+# ...
+```
+
+再开启一个事务来进行记录的读取
+
+##### 查询动作1
+
+```mysql
+# 使用READ COMMITTED隔离级别的事务
+BEGIN;
+# SELECT1：Transaction 100、200未提交
+SELECT * FROM hero WHERE number = 1; # 得到的列name的值为'刘备'
+```
+
+1.查看到可见版本，即"张飞"这条数据
+
+2.进行规则比较，ReadView的min_trx_id和max_trx_id是100,201,m_ids是[100,200],creator_trx_id是0
+
+3.trx_id是100，处于m_ids中，不可见->"关羽"，处于m_ids中，不可见->"刘备"，可见
+
+事务AB更改
+
+事务A提交
+
+```mysql
+# Transaction 100
+BEGIN;
+UPDATE hero SET name = '关羽' WHERE number = 1;
+UPDATE hero SET name = '张飞' WHERE number = 1;
+COMMIT;
+```
+
+事务B更改
+
+```mysql
+# Transaction 200
+BEGIN;
+# 更新了一些别的表的记录
+...
+UPDATE hero SET name = '赵云' WHERE number = 1;
+UPDATE hero SET name = '诸葛亮' WHERE number = 1;
+```
+
+![](https://raw.githubusercontent.com/rayliu445/blogImage/master/blogImage/mvcc%E8%AF%BB%E5%B7%B2%E6%8F%90%E4%BA%A4%E6%9F%A5%E8%AF%A2220250406.png)
+
+##### 查询动作2
+
+1.生成新的ReadView,min_trx_id和max_trx_id分别是200和201,m_ids是[200],creator_id是0
+
+2.比较可见trx_id和m_ids是同样的，不可见->省略->"张飞"，可见 
 
 #### Repeated Read
 
@@ -1447,7 +1523,7 @@ trx_id只有在insert,update,delete的时候才会被分配。
 4. Insert intention Locks
    等待插入的事务也会生成一个锁叫做插入意向锁,说的是事务在插入记录时会先生成一个插入意向锁,如果记录此时有之前的Gap锁或者Next-key锁,那么is_waiting=true
 5. 隐式锁
-   新增一条记录之后,其他事务可以对其做修改,这样会产生脏读和脏写的问题这个时候隐藏的trx_id事物id就发挥了作用
+   新增一条记录之后,其他事务可以对其做修改,这样会产生脏读和脏写的问题这个时候隐藏的trx_id即事务id就发挥了作用
    * 修改的是聚簇索引的记录时(事务B修改),事务A新增,那么B事务会检查记录的trx_id,如果属于活跃事务就会为记录加事务A的锁,然后再加自己的锁并处于等待状态
    * 修改的二级索引, 会使用页里面的某个属性来做判断检查trx_id是否活跃,否则就只能回表执行上面的步骤
 

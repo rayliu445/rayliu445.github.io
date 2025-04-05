@@ -16,8 +16,10 @@ export const nav: DefaultTheme.Config['nav'] = [
     items: [
       { text: 'Java生态', link: '/courses/java/index', activeMatch: '/courses/java/' },
       { text: '数据库相关', link: '/courses/database/index', activeMatch: '/courses/database/' },
-      { text: 'Web3生态', link: '/courses/web3/index', activeMatch: '/courses/web3/' },
-      { text: '中间件生态', link: '/courses/middleware/index', activeMatch: '/courses/middleware/' }
+      { text: '中间件', link: '/courses/middleware/index', activeMatch: '/courses/middleware/' },
+      { text: '计算机基础', link: '/courses/csbasics/index', activeMatch: '/courses/csbasics/' },
+      { text: '工程架构', link: '/courses/egarchitecture/index', activeMatch: '/courses/egarchitecture/' },
+      { text: 'Web3生态', link: '/courses/web3/index', activeMatch: '/courses/web3/' }
     ],
     activeMatch: '/courses/'
   },
