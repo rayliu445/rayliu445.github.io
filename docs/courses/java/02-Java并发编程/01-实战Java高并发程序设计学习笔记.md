@@ -197,7 +197,11 @@ finalize()方法在JVM中看到过,可达性分析时会有一次标记,实例�
 
 ### 同步控制
 
-#### synchronized的功能扩展ReentrantLock(可重入锁)
+#### Synchronized
+
+这应该是我们最为熟知的同步方式，也就是针对竞态资源加锁的方式，它有两种方式去加锁，一种是针对类来加锁，还有针对对象进行加锁
+
+#### ReentrantLock(可重入锁)-synchronized的功能扩展
 
 ##### 中断响应
 

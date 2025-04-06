@@ -166,7 +166,7 @@ https://draveness.me/mysql-innodb/
 
 ### 两者的异同
 
-最大的不同就是Compact在行记录的第一部分倒序存放了一行数据中列的长度(Length),而Redundant中存的是每一列的偏移量(Offset)
+最大的不同就是Compact在行记录的**第一部分倒序**存放了一行数据中列的长度(Length),而Redundant中存的是每一列的偏移量(Offset)
 
 ### 行溢出数据
 
@@ -235,7 +235,7 @@ https://draveness.me/mysql-innodb/
 
 ## B+树索引
 
-通过前面的学习我们知道查询到记录是存放在数据页中的,通过FileHeader和FileTrail将其连接为一个双向链表。数据记录是next_record指针连接起来的链表。
+通过前面的学习我们知道查询到记录是存放在**数据页**中的,通过FileHeader和FileTrail将其连接为一个双向链表。数据记录是next_record指针连接起来的链表。
 
 ### 为什么需要索引
 
@@ -243,7 +243,8 @@ https://draveness.me/mysql-innodb/
 二分法:根据数据页记录槽中的数据来快速定位到(这是在数据页中快速查找)
 如何快速找到是哪个数据页
 这个时候就需要借助某种数据结构来帮助我们快速定位到数据页
-页分裂
+
+#### 页分裂问题
 
 ### 先从简单的索引方案开始
 
@@ -1375,7 +1376,7 @@ serilizable
 Select之前生成一个ReadView
 trx_id只有在insert,update,delete的时候才会被分配。
 
-下面的例子更加直观  
+下面的例子更加直观
 
 首先定一个A事务和B事务，分别针对某条记录生成事务id
 
@@ -1448,7 +1449,7 @@ UPDATE hero SET name = '诸葛亮' WHERE number = 1;
 
 1.生成新的ReadView,min_trx_id和max_trx_id分别是200和201,m_ids是[200],creator_id是0
 
-2.比较可见trx_id和m_ids是同样的，不可见->省略->"张飞"，可见 
+2.比较可见trx_id和m_ids是同样的，不可见->省略->"张飞"，可见
 
 #### Repeated Read
 

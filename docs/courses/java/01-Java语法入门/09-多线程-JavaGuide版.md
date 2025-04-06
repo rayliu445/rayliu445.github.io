@@ -14,7 +14,7 @@ tags:
 
 ### 进程
 
-进程是程序的一次**执行过程**,**是系统运行程序的基本单位**(任务管理器看到的说明程序正在运行),因此进程是动态的。系统运行程序即是一个进程从创建,运行到消亡的过程。
+进程是程序的**一次****执行过程**,**是系统运行程序的基本单位**(任务管理器看到的说明程序正在运行),因此进程是**动态的**。系统运行程序即是一个进程从创建,运行到消亡的过程。
 在Java中,我们启动main函数就是启动了一个JVM的进程,main函数所在的线程就是这个进程中的主线程。
 
 ### 线程
@@ -25,13 +25,13 @@ Java程序天生就是多线程程序,我们可以通过JMX来看一下一个普
 ```java
 public class MutiThread{
     public static void main(String[] args){
-    
+  
         //获取Java线程管理MXBean
         ThreadMXBean threadMXBean=ManagementFactory.getThreadMXBean();
-    
+  
         //不需要获取同步的minitor和synchronizer信息,仅获取线程和线程堆栈信息
         ThreadInfo[] threadInfos=threadMXBean.dumpAllSThreads(false,false);
-    
+  
         //遍历线程信息,仅打印线程ID和线程名称信息
         for(ThreadInfo threadInfo:threadInfo){
             System.out.println("["+threadInfo.getThredId()+"]"+threadInfo.getThreadName());
@@ -57,7 +57,9 @@ public class MutiThread{
 ### 图解进程和线程的关系
 
 这里用一下Guide的图片
-![](https://gitee.com/aryangzhu/picture/raw/master/java/Java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F.png)
+
+![](https://raw.githubusercontent.com/rayliu445/blogImage/master/blogImage/java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F20250406.png)
+![img](https://gitee.com/aryangzhu/picture/raw/master/java/Java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F.png)
 从上面的图片可以看到,JDK1.8之后,方法区变为了**元空间**,但是每个线程有自己的程序计数器、虚拟机栈和本地方法栈。
 线程是进程的**更小执行单位**,线程执行开销小,但不利于资源的保护管理,因为执行时会相互影响。
 

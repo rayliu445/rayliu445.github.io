@@ -86,7 +86,6 @@ private Logger logger = LoggerFactory.getLogger(XxlJobConfig.class);
         xxlJobSpringExecutor.setAccessToken(accessToken);
         xxlJobSpringExecutor.setLogPath(logPath);
         xxlJobSpringExecutor.setLogRetentionDays(logRetentionDays);
-
         return xxlJobSpringExecutor;
     }
 

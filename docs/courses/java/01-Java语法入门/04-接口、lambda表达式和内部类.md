@@ -70,7 +70,7 @@ class Manager extends Employtee{
 **可以使用instanceof来检验一个对象是否实现了某个接口**,如下
 
 ```java
-if(anyObject instanceof Compable){...}        
+if(anyObject instanceof Compable){...}      
 ```
 
 和继承一样，接口也存在链,也就是说一个接口可以扩展另一个接口，使用extends关键字，被称为**接口链**。
@@ -601,7 +601,9 @@ Arrays.sort(people,comparing(Person::getMiddleName,nullFirst(naturlOrder())));
 
 ## 内部类
 
-内部类就是定义在其他类中的类。为什么使用内部类？
+内部类就是**定义在其他类中的类**。
+
+### 为什么使用内部类？
 
 1.内部类可以对同一个包中的其他类隐藏(也就是说需要在内部完成一些工作而不想被外部访问)。
 
