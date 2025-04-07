@@ -70,7 +70,7 @@ class Manager extends Employtee{
 **可以使用instanceof来检验一个对象是否实现了某个接口**,如下
 
 ```java
-if(anyObject instanceof Compable){...}      
+if(anyObject instanceof Compable){...}    
 ```
 
 和继承一样，接口也存在链,也就是说一个接口可以扩展另一个接口，使用extends关键字，被称为**接口链**。
@@ -286,7 +286,7 @@ copy.raiseSalary(10);
 
 ### 为什么引入lamba表达式
 
-**`<font color="blue">`lamba表达式是一个可传递的代码块 `</font>`**
+**lamba表达式是一个可传递的代码块**
 例如之前的TimerPrinter，可以构造一个实例提交到Timer对象。
 再或者想要自己定制一个比较器，可以向数组传递一个Comparator对象
 上面两者的共同特征是将一个代码块传递到到某个对象(定时器，Arrays的sort方法)
