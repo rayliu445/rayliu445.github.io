@@ -393,13 +393,96 @@ db.dump和/opt/homebrew/var/db/redis
 
 ### AOF持久化
 
-#### AOF缓冲区
+Append Only File，其实将服务器要执行的写命令(增删改)进行保存
+
+![](https://raw.githubusercontent.com/rayliu445/blogImage/master/blogImage/Redis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0AOF%E5%B7%A5%E4%BD%9C%E6%9E%B6%E6%9E%8420250415.png)
+
+#### 实现
+
+##### 1. 命令追加
+
+服务器在执行完一个命令之后，会以协议格式将被执行的的写命令追加到服务器状态的aof_buf缓冲区的结尾
+
+##### 2.AOF文件的写入与同步
+
+Redis的服务器进程就是一个事件循环(Loop)，这个循环中的**文件事件负责接收客户端的命令请求**，以及向客户端发送命令回复，而时间事件则负责执行像serverCron函数这样需要定时运行的函数。
+
+```c
+def eventLoop():
+	while True:
+	# 处理文件事件，接收命令请求以及发送命令回复
+	# 处理命令请求时可能会有新的内容被追加到aof_buf缓冲区
+	processFileEvents()
+
+	# 处理时间事件
+	processTimeEvents()
+
+	flushAppendOnFile()
+```
+
+#### AOF文件的载入与数据还原
+
+![](https://raw.githubusercontent.com/rayliu445/blogImage/master/blogImage/Redis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0AOF%E8%BD%BD%E5%85%A5%E4%B8%8E%E9%87%8D%E5%86%9920250415.png)
 
 #### 重写
 
+##### 为什么要重写
+
+因为随着命令的追加这个AOF文件会越来越膨胀，如果不加以控制的话，那么体积过大的AOF文件就会Redis服务器甚至宿主机造成影响
+
+##### 如何实现
+
+我看书理解下来就是将多个同类型的进行一个合并，例如list类型 rpush "a"和rpush "b"是两条命令，但是进行命令合并之后就会改写为rpush "a" "b"
+
 ##### AOF重写缓冲区
 
+![](https://raw.githubusercontent.com/rayliu445/blogImage/master/blogImage/Redis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0AOF%E9%87%8D%E5%86%99%E7%BC%93%E5%86%B2%E5%8C%BA20250415.png)
+
+在执行BGREWRITEAOF命令时，Redis服务器会维护一个**AOF重写缓冲区**，该缓冲区会在子进程创建新的AOF期间，**记录服务器执行的所有写命令**。当子进程完成创建新的AOF的工作命令后，服务器会将重写缓冲区中的所有内容追加到新AOF的末尾。
+
 ### 事件
+
+1.文件事件file event
+
+Redis服务器通过套接字与客户端进行连接，而**文件事件就是服务器对套接字操作的抽象**。服务器与客户端(或者其他服务器)的通信会产生相应的文件事件，而服务器则通过监听并处理这些事件来完成一系列网络通信操作。
+
+2.时间事件time event
+
+Redis服务器中的一些操作(比如serverCron函数)需要在给定的时间点执行，而时间事件就是服务器对这类定时操作的抽象。
+
+#### 文件事件
+
+##### 文件事件处理器
+
+基于**Reactor模式**(不知道这块儿的理论知识)开发了自己的网络事件处理器
+
+1.文件事件处理器使用I/O多路复用(multiplexing)程序来同时监听多个套接字，并根据套接字目前执行的任务来为套接字关联不同的事件处理器(这里看不懂很正常，后面会有新的介绍)。
+
+2.当被监听的套接字准备好执行应答(accept)、读取(read)、写入(write)和关闭等操作时，与操作相对应的事件就会产生，这时文件事件处理器就回调用套接字之前关联好的事件处理器来处理这些事件。
+
+##### 文件事件处理器的构成
+
+![img](https://raw.githubusercontent.com/rayliu445/blogImage/master/blogImage/Redis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E5%99%A820250415.png)
+
+最左边的就是文件事件即套接字操作的抽象
+
+然后就是I/O多路复用程序，多个文件事件回并发地出现，但是I/O多路复用程序总是回将所有产生事件的套接字都放到一个队列里面，然后通过这个队列，以有序(sequentially)、同步(synchronously)、每次一个套接字的方式向文件事件分派器传送套接。重要的你前面不管咋并发，我都是维护一个队列，一个一个地发送到后面的分派器(不知道为啥要着重描述这一段???)。只有当上一个套接字产生的事件被处理完之后(该套接字为事件所关联的事件处理器执行完毕)，I/O多路复用程序才会继续向文件事件分派器传送下一个关键字。
+
+![](https://raw.githubusercontent.com/rayliu445/blogImage/master/blogImage/Redis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E5%99%A8%E9%98%9F%E5%88%9720250415.png)
+
+文件事件分派器负责接收来自I/O多路复用程序传来的关键字，并根据套接字产生的事件的类型来调用相应的事件处理器。
+
+服务器会为执行不同任务的套接字关联不同的事件处理器，这些处理器都是一个个函数，它们定义了某个事件发生时，服务器应该执行的动作。
+
+##### I/O多路复用程序的实现
+
+##### 事件的实现
+
+##### API
+
+##### 文件事件的处理器
+
+#### 时间事件
 
 首先来复习一下多路复用,没办法用的多有什么辙
 几个关键的记忆点,bind()函数和accept()函数,socket

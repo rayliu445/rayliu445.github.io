@@ -283,6 +283,10 @@ B+树本身就是一个聚簇索引,也就是说索引和数据都在树中,且�
 
 1. 根结点不移动,移动的是页中的数据
 2. 内节点(除去叶子节点)目录项记录的唯一性
+
+   ![img](https://raw.githubusercontent.com/rayliu445/blogImage/master/blogImage/%E6%A0%B9%E4%B8%8AMySQLB+%E6%A0%91%E4%BA%8C%E7%BA%A7%E7%B4%A2%E5%BC%9520250416.png)
+
+   也就是说最终的索引目录项如上图所示
 3. 一个页面最少存储2条记录
 
 ### MyISAM中的索引方案简单介绍
@@ -340,19 +344,28 @@ SELECT * FROM person_info WHERE name LIKE 'As%';
 
 可以看到根据前缀进行了匹配,在索引的排序也是这样的,在索引变动时某个列也会根据字母顺序排序
 
-#### 匹配范围值
+#### 匹配范围值(重要)
 
 ```mysql
-select * from person_info where name >'Asa' and name<'Barlow';
+select * from person_info where name >'Asa' and name<'Barlow' and birthday>'1980-01-01';
 ```
 
 找到name的值为Asa的记录
 找到name的值为Barlow的记录
-拿到中间的所有记录
+拿到中间的所有记录，然后会用到这颗B+树索引树的匹配出来主键id,但是不会用到birthday索引缩小范围，因为多个name匹配下的birthday不是有序的
 
-#### 精确匹配某一列并范围匹配另一列
+#### 精确匹配某一列并范围匹配另一列(重要)
+
+```mysql
+SELECT * FROM person_info WHERE name = 'Ashburn' AND birthday > '1980-01-01' AND birthday
+< '2000-12-31' AND phone_number > '15100000000';
+```
 
 精确匹配到的列必须是最左边的列
+
+**注意：这里的最左匹配原则生效我之前理解有误，应该联合索引(a,b,c)，如果a的值确定的情况下b的值才会有走索引的价值，不然就不会走索引。**
+
+为什么，我们例子来看上面的例子，name已经确定了是'Ashburn'，然后a索引下的目录项的b索引都是有序的，就可以用birthday索引来缩小范围，但是phone_number索引就不能生效了
 
 #### 用于排序
 
@@ -1550,6 +1563,20 @@ IS锁和IX锁是表级锁，它们的提出仅仅是为了快速判断表中是�
    新增一条记录之后,其他事务可以对其做修改,这样会产生脏读和脏写的问题这个时候隐藏的trx_id即事务id就发挥了作用
    * 修改的是聚簇索引的记录时(事务B修改),事务A新增,那么B事务会检查记录的trx_id,如果属于活跃事务就会为记录加事务A的锁,然后再加自己的锁并处于等待状态
    * 修改的二级索引, 会使用页里面的某个属性来做判断检查trx_id是否活跃,否则就只能回表执行上面的步骤
+
+![](https://raw.githubusercontent.com/rayliu445/blogImage/master/blogImage/InnoDB%E4%B8%AD%E7%9A%84%E9%94%81%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%9B%BE20250415.png)
+
+上面的图展示了next-key锁如何工作的，对于RR级别来说
+
+![](https://raw.githubusercontent.com/rayliu445/blogImage/master/blogImage/%E7%BE%8E%E5%9B%A2RR%E7%BA%A7%E5%88%AB%E9%94%81%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C20250415.png)
+
+InnoDB将这段数据分为几个区间：
+
+* (negative infinity,5]
+* (5,30],
+* (30,positive  infinity]
+
+在进行update时，不仅锁住了对应的数据行，也在两边都加了gap锁。这样事务就无法在这两个区间insert进去新的数据了。
 
 #### InnoDB的锁的内存结构
 
