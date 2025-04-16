@@ -1,5 +1,5 @@
 ---
-title: Maven入门和实战
+title: 03-Maven入门和实战
 author: Ray
 date: 2022/10/02 21:30
 categories:
@@ -8,6 +8,8 @@ tags:
  - Java
  - JavaWeb
 ---
+# Maven入门和实战
+
 ## 入门
 
 这里不多做赘述，直接看网上教程即可

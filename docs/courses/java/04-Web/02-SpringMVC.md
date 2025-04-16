@@ -1,5 +1,5 @@
 ---
-title: 01-Servlet快速入门
+title: 02-SpringMVC
 author: Ray
 date: 2022/10/02 21:30
 categories:
@@ -8,3 +8,4 @@ tags:
  - Java
  - JavaWeb
 ---
+# SpringMVC
