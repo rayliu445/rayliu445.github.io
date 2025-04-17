@@ -10,6 +10,8 @@ tags:
  - JDK
  - 开发环境
 ---
+# 接口、lambda表达式和内部类
+
 ## 接口
 
 接口是一种技术，**用来描述类应该做什么，但是不指定如何做**。一个类可以实现一个或者多个接口。然后介绍lambda表达式，再讨论内部类(定义在其他类的内部，可以访问外部类的字段)，最后学习反射机制。
@@ -70,7 +72,7 @@ class Manager extends Employtee{
 **可以使用instanceof来检验一个对象是否实现了某个接口**,如下
 
 ```java
-if(anyObject instanceof Compable){...}    
+if(anyObject instanceof Compable){...}  
 ```
 
 和继承一样，接口也存在链,也就是说一个接口可以扩展另一个接口，使用extends关键字，被称为**接口链**。

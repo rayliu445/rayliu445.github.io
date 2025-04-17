@@ -24,7 +24,7 @@ tags:
 
 #### 2.1 内存区域(重点)
 
-![内存区域](https://raw.githubusercontent.com/aryangzhu/blogImage/master/blogImage/imagesJVM%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F20241023.png)
+![](https://raw.githubusercontent.com/rayliu445/blogImage/master/blogImage/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3JVM%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F20250417.png)
 
 ##### 公共
 
@@ -102,7 +102,7 @@ tags:
 #### 2. 类加载的时机
 
 下图展示了类加载的7个阶段,其中验证、准备和解析统称为连接
-![类加载时机](https://raw.githubusercontent.com/aryangzhu/blogImage/master/blogImage/images%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%97%B6%E6%9C%BA20241023.png)
+![](https://raw.githubusercontent.com/rayliu445/blogImage/master/blogImage/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3JVM%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B20250417.png)
 
 #### 3. 类加载的过程
 
@@ -123,6 +123,9 @@ tags:
 写在最后
 最近一直在准备面试,但是简历一直无人问津,索性先沉下心来学学JVM。我也不确定看这玩意儿对面试有没有帮助,说实话很怕花很多时间去研究但是没有收获期望的回报。
 参考资料
-周志明-《深入理解Java虚拟机》
+
+周志明-《深入理解Java虚拟机》  
 [知乎文章](https://zhuanlan.zhihu.com/p/98337005)
+
+写在最后：  
 怕什么真理无穷,进一步有进一步的欢喜

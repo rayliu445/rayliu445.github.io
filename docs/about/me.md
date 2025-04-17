@@ -7,10 +7,10 @@ showComment: false
 ---
 <img width=100% src="../public/img/svg/about-me-header.svg" alt="头部图" />
 <p align="center">
-  <a href="https://blog.charles7c.top/" target="_blank" style="display: inline-block;">
-    <img alt="个人主页" src="https://img.shields.io/badge/知识库-查尔斯-lightblue?logo=blogger&logoColor=lightblue" />
+  <a href="https://github.com/rayliu445" target="_blank" style="display: inline-block;">
+    <img alt="个人主页" src="https://img.shields.io/badge/Github-Ray-blue" />
   </a> 
-    <a href="https://github.com/rayliu445" target="_blank" style="display: inline-block;">
+    <!-- <a href="https://github.com/rayliu445" target="_blank" style="display: inline-block;">
         <img alt="GitHub个人主页" src="https://img.shields.io/badge/GitHub-Charles7c-lightblue?logo=github" />
     </a> 
     <a href="https://gitee.com/Charles7c" target="_blank" style="display: inline-block;">
@@ -24,7 +24,7 @@ showComment: false
     </a> 
     <a href="https://www.yuque.com/charles7c" target="_blank" style="display: inline-block;">
         <img alt="语雀个人主页" src="https://img.shields.io/badge/语雀-查尔斯-38D27D" />
-    </a> 
+    </a>  -->
 </p>
 
 ---
@@ -32,7 +32,7 @@ showComment: false
 - 👋 Hi, I'm Ray
 - 🔭 I'm currently working on backend development
 - 📫 How to reach me: [rayliu448@gmail.com](mailto:rayliu448@gmail.com)
-- 📖 My motto: “东隅已逝，桑榆非晚。”
+- 📖 My motto: "但行好事，不问前程。"
 
 ---
 
