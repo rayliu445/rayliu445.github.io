@@ -1512,11 +1512,26 @@ UPDATE hero SET name = '诸葛亮' WHERE number = 1;
 4. 通过MVCC读和锁写
 5. 读写都加锁
 
+### 解决并发事务带来问题的两种方式
+
 #### 一致性读
 
 指的就是不加锁的读的方式
 
-#### 共享锁和排他锁
+#### 锁定读
+
+##### 语句
+
+1. 对读取记录加S锁
+   ```mysql
+   SELECT ... LOCK IN SHARE MODE;
+   ```
+2. 对读取的记录加X锁
+   ```mysql
+   SELECT ... FOR UPDATE;
+   ```
+
+共享锁和排他锁
 
 共享锁S-shared
 拍他锁X-exclude
