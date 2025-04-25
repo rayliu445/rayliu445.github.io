@@ -407,11 +407,23 @@ show variables like 'datadir';
 
 #### 表文件在文件系统中的表示
 
-我在自己电脑上没有发现与书上一致的表结构文件和表数据文件,只有一个.ibd文件
+![](https://raw.githubusercontent.com/rayliu445/blogImage/master/blogImage/MySQL%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%9520250425.png)
 
-##### 表结构文件
+如上，这是我本地docker安装的数据库的文件，表结构文件后缀是.frm，而数据存储文件则以.ibd后缀结尾。
 
-##### 表数据文件
+(我在自己电脑上没有发现与书上一致的表结构文件和表数据文件,只有一个.ibd文件，写这段话的时间是在2023年，估计是版本不同)
+
+##### 1.表结构的定义
+
+也就是上面所说的frm
+
+##### 2.表数据文件
+
+也就是上面所说的ibd
+
+##### InnoDB是如何存储数据的
+
+InnoDB提出了一个**表空间**的概念，这是一个抽象的概念，它可以对应文件系统上一个或者多个真实文件(不同表空间对应的文件数量不同)。每一个表空间可以被划分为很多个页，我们的表数据就存放在表空间某些页里。
 
 ###### 系统表空间
 
@@ -427,7 +439,7 @@ MySQL5.6.6之后数据会被存储到独立表空间
 表结构、索引(在介绍索引时有提到过)和表数据三者分开存储
 test.frm test.MYD  test.MYI
 
-#### 试图在文件系统中的表示
+#### 视图在文件系统中的表示
 
 虚拟表,所以只用存储表结构文件
 
@@ -445,6 +457,8 @@ test.frm test.MYD  test.MYI
 文件长度受到文件系统最大长度限制
 
 ## 存放页面的池子-InnoDB的表空间
+
+可以把表空间想象成被切分为许许多多个页的池子，当我们想为某个表插入一条记录的时候，就从池子中捞出一个对应的页来把数据写入进去。
 
 这一章的内容可能难以理解,所以需要借助图片来更加直观的展示
 
@@ -1350,6 +1364,42 @@ undoslot指向页链表的首个页节点
 
 全称是binary log即二进制文件，上面的undolog和redolog都是在InnoDB提供的日志。
 
+记录了对MySQL数据库执行更改的所有操作，但是不包括SELECT和SHOW这类操作，因为这类操作对数据库本身没有更改，但是，如果更新本身没有导致数据库发生变化，那么该操作可能也会写入二进制日志。
+
+我们来举个例子
+
+```bash
+mysql＞UPDATE t SET a=1 WHERE a=2;
+Query OK,0 rows affected(0.00 sec)
+Rows matched:0 Changed:0 Warnings:0
+
+mysql＞SHOW BINLOG EVENTS IN'mysqld.000008'\G;”
+## ....省略中间的记录
+***************************3.row***************************
+Log_name:mysqld.000008
+Pos:199
+Event_type:Query
+Server_id:1
+End_log_pos:303
+Info:use'test';UPDATE t SET a=1 WHERE a=2
+```
+
+### binlog_format参数
+
+自从MYSQL5.1开始引入了binlog_format参数，该参数可设的值有STATEMENT、ROW和MIXED
+
+#### 1. STATEMENT
+
+记录的是日志的逻辑SQL语句。
+
+#### 2. ROW
+
+二进制日志记录不再是简单的SQL语句，而是记录表的行更改情况。
+
+#### 3. MIXED
+
+默认采用STATEMENT格式，在一些特殊情况下会使用ROW格式
+
 ## 事务的隔离级别和MVCC
 
 ### 为什么需要隔离级别
@@ -1605,3 +1655,5 @@ InnoDB将这段数据分为几个区间：
 3. n_bits:有多个比特位，哪条记录被加了锁，相应的比特位就要标记。
 
 #### 死锁场景和解决方案
+
+innoDB有个配置叫做wait_time，可以设置等待时长，如果到达等待时长之后则放弃当前事务。
