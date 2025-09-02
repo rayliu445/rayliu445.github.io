@@ -10,12 +10,12 @@ export const sidebar: DefaultTheme.Config['sidebar'] = {
   '/categories/solutions/': getItemsByDate("categories/solutions"),
   '/categories/tools/': getItemsByDate("categories/tools"),
 
+  '/courses/csbasics/': getItems("courses/csbasics"),
   '/courses/java/': getItems("courses/java"),
   '/courses/database/': getItems("courses/database"),
   '/courses/web3/': getItems("courses/web3"),
   '/courses/middleware/': getItems("courses/middleware"),
-  '/courses/egarchitecture/': getItems("/courses/egarchitecture/"),
-  '/courses/csbasics/': getItems("/courses/csbasics"),
+  '/courses/egarchitecture/': getItems("courses/egarchitecture"),
 
   '/notes/code/':getItems("/notes/code")
 }
