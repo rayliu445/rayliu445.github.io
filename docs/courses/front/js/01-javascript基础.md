@@ -466,7 +466,7 @@ xiaoming.name; // '小明'
 xiaoming.run(); // 小明 is running...
 ```
 
-![1738725252056](image/js_learning_note/1738725252056.png)
+<!-- ![1738725252056](image/js_learning_note/1738725252056.png) -->
 
 javascript的原型链和Java的clss就在于，它没有class的概念，要知道class是由jvm统一管理的，而js中的原型链上都是对象
 
@@ -576,7 +576,7 @@ let p3 = p2.catch(function (reason) {
 
 Promise最大的好处是在异步执行的流程中，把执行代码和处理结果的代码清晰地分离了：
 
-![1738726632955](image/js_learning_note/1738726632955.png)
+<!-- ![1738726632955](image/js_learning_note/1738726632955.png) -->
 
 #### async配合await调用Promise
 
