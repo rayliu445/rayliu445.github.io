@@ -58,7 +58,7 @@ if-else
 1. Map常用的一些API
 2. Set常用的一些API
 
-### iterable
+### Iterable
 
 for...of
 

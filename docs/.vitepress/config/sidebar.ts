@@ -16,7 +16,6 @@ export const sidebar: DefaultTheme.Config['sidebar'] = {
   '/courses/web3/': getItems("courses/web3"),
   '/courses/middleware/': getItems("courses/middleware"),
   '/courses/egarchitecture/': getItems("courses/egarchitecture"),
-
   '/notes/code/':getItems("/notes/code")
 }
 
