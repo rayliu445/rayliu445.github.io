@@ -72,8 +72,6 @@ var a=null;
 console.log(a); //很显然null还是需要指定的，如果没指定那就是undefined
 ```
 
-#### 数组
-
 #### 对象
 
 对象是一组由键-值组成的无序集合，例如:
@@ -104,11 +102,76 @@ i=10;
 
 ### 字符串
 
-1. 单行字符串
-2. 多行字符串
+1. 单行字符串 'ok'
+2. 多行字符串 \`ok\`
 3. 字符串模板
 
+```javascript
+`你好, ${name}, 你今年${age}岁了!`
+```
+
 ### 数组
+
+```javascript
+let arr=[1,2,3.14,'Hello',null,true];
+```
+
+修改arr的length会使得数组的大小发生变化
+
+Array可以通过索引把对应元素修改为新的值，对Array的索引进行赋值会直接修改这个Array
+
+##### 常用方法
+
+###### indexOf
+
+```javascript
+let arr=[10,20,'30','xyz'];
+arr.indexOf(10);//查询元素值为10的下标
+```
+
+###### slice
+
+```javascript
+let arr=['A','B','C','D','E','F','G'];
+arr.slice(0,3);//0-3索引的截断
+arr.slice(3);
+```
+
+###### push和pop
+
+push()向Array的末尾添加若干元素,pop()则把Array的最后一个元素删除掉
+
+###### unshift和shift
+
+Array头部添加元素使用unshift()方法，shift()方法则把Array的第一个元素删掉
+
+###### sort
+
+对当前进行排序，并且在原地进行改动
+
+###### reverse
+
+reverse()把整个Array的元素给调个个，也就是反转，也是原地改动
+
+###### splice
+
+从指定的索引开始删除若干元素，然后再从该位置添加若干元素，可以用这个方法替代许多其他操作
+
+比如说头增元素，那就是0索引位置处，删除0个元素再添加1个元素
+
+###### concat
+
+把一个Array和另一个连接起来，返回一个新的Array
+
+###### join
+
+把当前Array中的每个元素都用指定的字符串连接起来，然后返回连接起来的字符串
+
+###### 多维数组
+
+```javascript
+arr=[[1,2,3],[400,500,600]]
+```
 
 #### 常见属性
 
@@ -124,7 +187,7 @@ i=10;
 
 ### 条件判断
 
-if-else
+if{xxx} esle{xxx}
 
 注：要写上{}
 
@@ -133,12 +196,38 @@ if-else
 #### 两种种形式
 
 1. for ifor(i=0;i++;i<100)和变体for in
-2. while 包括while和while...do
+2. while 包括while(){xxx}和do{xxx}while
 
 ### Map和Set
 
-1. Map常用的一些API
-2. Set常用的一些API
+#### Map
+
+```javascript
+let m=new Map([['Michael',95],['Bob',75]]);
+```
+
+Map常用的一些API
+
+```javascript
+let m = new Map(); // 空Map
+m.set('Adam', 67); // 添加新的key-value
+m.set('Bob', 59);
+m.has('Adam'); // 是否存在key 'Adam': true
+m.get('Adam'); // 67
+m.delete('Adam'); // 删除key 'Adam'
+m.get('Adam'); // undefined
+```
+
+#### Set
+
+
+```javascript
+let s2 = new Set([1, 2, 3]); // 含1, 2, 3
+```
+
+[](javascript:void(0) "复制到剪贴板")
+
+##### Set常用的一些API
 
 ### Iterable
 

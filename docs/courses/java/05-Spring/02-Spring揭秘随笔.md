@@ -8,6 +8,7 @@ tags:
  - Spring
 ---
 # Spring揭秘随笔
+
 ## Spring发展
 
 ### 时代发展
@@ -297,15 +298,15 @@ ApplicationContext则是启动完成就会实例化。
 2.3. 生命周期回顾
 2.4. 对象其他处理
 2.5. 注册回调接口
-######## bean的一生(生命周期)
+######## bean的一生(生命周期)。
 ########## Bean的初始化与BeanWrapper
 容器内部实例化使用了"策略"模式来决定何种方式初始化bean实例，**可选的策略有反射或者CGlib动态字节码来生成初始化相应的bean实例或者动态生成其子类**。默认情况下，容器内部采用的是CGlibSubClassingInstantiationStrategy。
-容器根据**BeanDefinition取得实例化信息**，再加上上面的CGlibSubClassingInstantantiationStrategy(从名字就可以看出生成字节码且是某个类的子类)就可以创建实例。但是，由于返回方式上有些"点缀"，所以不直接返回Bean而是BeanWrapper。
+容器根据**BeanDefinition取得实例化信息**，再加上上面的   CGlibSubClassingInstantantiationStrategy(从名字就可以看出生成字节码且是某个类的子类)就可以创建实例。但是，由于返回方式上有些"点缀"，所以不直接返回Bean而是BeanWrapper。
 下来的这段话很重要，也表明了为什么需要BeanWrapper的存在。
 BeanWrapper实现了实现了PropertyAccessor和TypeConVert接口，所以之前阶段定义的PorpetyEditorRegistry就是这个时候用的，也就是说启动阶段只负责加载了这些玩意儿，而在真正的实例化阶段属性和依赖设置的时候这些才会真正的起作用。
 ########## 各色的Aware接口
 Aware接口的作用通常是将某个依赖注入到实例中。
-BeanNameAware将BeanName添加到当前实例中。
+BeanNameAware将BeanName添加到当前实例中。  
 ResourceContextAware将Application添加到当前实例中。
 ########## BeanPostFactoryProcessor与BeanFactory
 这个阶段常见的就是处理标记接口实现类Aware。
@@ -313,7 +314,7 @@ ResourceContextAware将Application添加到当前实例中。
 检查是否初始化
 是否有初始化方法
 ########## 后置处理
-也是Processro机制的一种。
+也是Processro机制的一种。  
 
 #### BeanFactory结合XML
 
