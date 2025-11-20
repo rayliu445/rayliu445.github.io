@@ -4,10 +4,10 @@ editLink: false
 lastUpdated: false
 showComment: false
 ---
-
 # Bug万象集
 
 ::: tip 笔者说
-你读过的书，遇过的人，扛过的事，写过的 Bug，构成了你作为开发者的人生格局。
+
+Hello,这里记录了一些我遇到的坑点和bug,目前掺杂了原作者的很多的博客,之后我会陆续进行更新
 
 :::

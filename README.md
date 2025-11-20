@@ -12,7 +12,7 @@
     <img src="https://github.com/Charles7c/charles7c.github.io/actions/workflows/deploy-pages.yml/badge.svg">
 </a>
 
-📝我借助**查尔斯**的个人技术知识库项目来搭建自己的博客(由于需要username.github.io来访问，所以没有fork)，大家可以通过链接找到原博客
+📝我借助**查尔斯**的个人技术知识库项目来搭建自己的博客(由于需要username.github.io来访问，所以没有fork)，大家可以通过链接找到原博客https://github.com/Charles7c
 
 🐢 [GitHub Pages（完整体验）](https://blog.charles7c.top) | 🐇 [Gitee Pages（无法评论）](https://charles7c.gitee.io)
 

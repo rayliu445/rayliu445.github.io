@@ -2,23 +2,105 @@
 
 ### 基本数据类型和变量
 
+看一下下面的例子
+
+```javascript
+var r=123.456
+var s=3.14*r*r;
+console.log(s);
+
+console.log(Number.MAX_SAFE_INTEGER);ß
+```
+
 #### Number
+
+```javascript
+123;//整数123
+0.456;//浮点数0.456
+1.2345e3;//科学计数法
+-99;//负数
+NaN;//NaN表示Not a Number，当无法计算结果用NaN表示
+Infinity;//表示无限大，当数值超过了Javascript的Number所能表示的最大值时，就表示为Infinity
+```
+
+##### 数值运算符
+
+```javascript
+1+2;//3
+(1+2)*5/2; //7.5
+10%3; //1.5
+```
 
 #### 字符串
 
+用''号或者""号括起来的任意文本，比如'abc'，"xyz"
+
 #### 布尔值&&比较运算符
+
+##### 布尔值
+
+```javascript
+true;
+false;
+2>1;
+2>=3;
+```
+
+##### 布尔运算符
+
+&&、||、!true
+
+##### 比较运算
+
+```javascript
+2>5;
+5>=2;
+7==7;
+```
 
 #### BigInt
 
+js中内置的类型，用的时候往Number后面加个n，例如var bi2=BigInt(1234)或者var bi3=1234n;最大取值是2^53
+
 #### null和undefined
+
+null表示空的值，而undefined代表未定义
+
+```javascript
+console.log(a); //undefined
+var a=null;
+console.log(a); //很显然null还是需要指定的，如果没指定那就是undefined
+```
 
 #### 数组
 
 #### 对象
 
+对象是一组由键-值组成的无序集合，例如:
+
+```javascript
+var person={
+    name:'Bob',
+    age: 20,
+    tags:['js','web','moblie']
+}
+```
+
 #### 变量
 
+变量名是大小写英文、数字、$和_的组合，且不能用数字开头。也不能是javscript的关键字，like if、while等。
+
 #### ECMA规范与strict模式
+
+js一开始并没有强制要求用var申明变量。这个设计错误带来了严重的后果：如果一个变量没有通过var申明就被使用，那么该变量就自动被申明为全局变量：
+
+```javascript
+i=10;
+```
+
+在一个页面的不同的JavaScript文件中，如果都不用var申明，恰好都使用了变量i，将造成变量i互相影响，产生难以调试的错误结果。
+
+后来推出了ECMA规范，限制了，当你在js文件开头申明了'use strict';那么不申明就会报错，提示变量undefined。
 
 ### 字符串
 

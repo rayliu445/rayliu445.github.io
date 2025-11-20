@@ -156,6 +156,8 @@ python没有任何机制来保证常量
 
 #### 动态语言与静态语言
 
+上面变量有提到过
+
 ### list和tuple
 
 #### list
@@ -178,7 +180,7 @@ classmates = ('Michael', 'Bob', 'Tracy')
 
 #### dict
 
-```
+```python
 d={'Michael':95,'Bob':75,'Tracy':85}
 d['Michael']
 ```
@@ -195,18 +197,329 @@ key不存在指定默认值 d.get('xxx',-1)，like Java中的getOrDefault(xxx,-1
 
 tuple用()，而set用{}
 
+```
+s={1,1,2,2,3,3}
+```
+
+如果输出之后那么就会变成{1,2,3}，去重了重复元素
+
 ### 条件分支& 循环&模式匹配
 
 ##### 条件分支
 
-if...elif..
+常见使用方式
+
+if xxx:do sth else: do sth
+
+if xxx: do sth elif xxx: do sth
 
 #### 循环
 
 for x in xxx
 
-while ...
+这里的xxx是一个Itreator的对象，和Iterable有区别，等到迭代器的时候再展开讲讲
+
+while xxx:
+
+    do sth
 
 #### 模式匹配
 
-match xxx case 'A':....
+match xxx case 'A':do sth case 'B':do sth
+
+这块儿复杂匹配有点麻烦，等到用的时候可以再细看
+
+## 函数
+
+### 调用函数
+
+#### 常见数据类型转换
+
+```python
+int('123')
+int(12.34)
+float('12.34')
+str(1.23)
+str(100)
+bool(1)
+bool('')
+
+```
+
+### 定义函数
+
+#### 普通函数
+
+```python
+def my_abs(x):
+    if x>=0:
+        return x
+    else:
+        return -x
+
+```
+
+#### 空函数
+
+```python
+def pop():
+    pass
+```
+
+#### 参数检查
+
+调用函数时，如果参数个数不对，Python解释器会自动检查出来，并抛出TypeError，就像下面这样
+
+```
+>>> my_abs(1, 2)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: my_abs() takes 1 positional argument but 2 were given
+
+```
+
+这里廖老师的例子还是蛮有趣的，分别调用abs('A')自己和内置实现的abs，观察抛出的错误有何差别，**注意:参数个数不同的话那么解释器会检查出来，但是参数类型不对就要我们自己来做检查了**
+
+#### 返回多个值
+
+```python
+def my_method(x,y,step,angle=0)
+    return x,y
+```
+
+### 函数的参数
+
+#### 位置参数
+
+```python
+def power(x,n):
+    s=1
+    while n>0:
+        n=n-1
+        s=s*x
+    return s
+```
+
+#### 默认参数
+
+```python
+def power(x,n=2):
+    s=1
+    while n>0:
+        n=n-1
+        s=s*x
+    return s
+```
+
+这里在方法中加入了n=2就是默认参数
+
+```python
+def enroll(name,gender,age=6,city='Beijing'):
+    pass
+```
+
+注:参数中有多个参数时，既可以按照顺序提供默认参数(就像这样调用enroll('Bob','M',7))，也可以不按照顺序提供部分默认参数(enroll('Adam','M',city='Tianjin'))，当不按顺序提供部分默认参数时，需要把参数名写上。
+
+**注:默认参数必须要指向不可变对象**
+
+#### 可变参数
+
+在参数前面可以加一个*号，为什么需要可变参数，有时候我们传入的参数的个数是不一定的，所以就有了这个特性。
+
+```python
+def calc(*numbers):
+    sum=0
+    for n in numbers:
+        sum=sum+n*n
+    return sum
+```
+
+将传入的参数转变为了tuple
+
+#### 关键字参数
+
+关键字参数允许你传入0个或任意个含有参数名的参数，这些关键字参数在函数内部自动组装为一个dict。
+
+```python
+def person(name,age,**kw):
+    print('name:',name,'age:',age,'other:',kw)
+```
+
+```python
+extra={'city':'Beijing','job':'Engineer'}
+person('Jack',24,**extra)
+```
+
+\*\*extra表示把这个dict的所有key-value用关键字参数传入到函数的\*\*kw参数，注意这里获得的是dict是extra的一份拷贝，对kw的改动不会影响到函数外的extra。
+
+#### 命名关键字参数
+
+就是在关键字参数中指定参数的名称，*之后的参数调用的时候必须要参数名称
+
+```python
+def person(name, age, *, city, job):
+    print(name, age, city, job)
+```
+
+调用方式
+
+```python
+person('zhangsan',17,city='beijing',job='soft engineer')
+```
+
+命名关键字参数可以有缺省值，从而简化调用:
+
+```python
+def person(name,age,*,city='Beijing',job):
+    print(name,age,city,job)
+```
+
+#### 参数组合
+
+上面的5种类型的参数可以组合使用，但是**参数定义的顺序必须是：必选参数、默认参数、可变参数、命名关键字和关键字参数**
+
+### 函数递归
+
+和其他语言一样，就是在内部调用自身本身。
+
+## 高级特性
+
+### 切片
+
+```python
+L=['Michcel','Sarah','Tracy','Bob']
+```
+
+1.从头取值L[0:3]，从头开始取的话也可以L[:3]
+
+2.倒数取数L[-1],取倒数第一个元素，同理L[-2]取倒数第二个元素，L[-2:]倒数第二个开始到最后一个
+
+3.步长L[:10:2]从头开始前10个数，每两个取一个数
+
+4.复制操作L[:]就是复制出来一个list
+
+5.tuple和string类型也可以使用切片(0,1,2,3,4,5)[:3]和'ABCDEFG'[::2]
+
+### 迭代
+
+#### 可迭代对象
+
+判断一个对象是可迭代对象
+
+```python
+from collections.abc import Iterable
+isInstance('abc',Iterable)
+```
+
+list、string和dict这些都是可迭代对象，字符串也是
+
+for xxx in xxx :print(xxx)
+
+上面的for循环语法，只要是可迭代对象，for循环就可以正常运行
+
+```python
+for i,value in enumerate(['A','B','C']):
+    print(i,value)
+```
+
+### 列表生成式
+
+顾名思义就是生成一个列表，当然暴力写法可以，这里探讨的是python内置的一个功能
+
+```python
+x*x for x in range(1,11)
+```
+
+x*x就是最终以什么表达式处理x然后输出
+
+range(1,11)就是我们圈定的范围
+
+```python
+>>> [x * x for x in range(1, 11) if x % 2 == 0]
+[4, 16, 36, 64, 100]
+
+```
+
+后面这个只能是筛选的功能(你想有了一个条件才能筛选一部分出来，if else如果包含全部的集合那么就不能筛选)，并不能将当前x做转换，如果要做转换的话那么就需要将表达式前置
+
+```python
+[x if x%2 ==0 else -x for x in range(1,11)]
+```
+
+列表生成式也可以使用两个变量来生成list:
+
+```python
+d={'x':'A','y':'B','z':'C'}
+[k + '=' + v for k, v in d.items()]
+```
+
+### 生成器
+
+用的时候才生成，这样就可以减少内存的压力，这就是生成器的本质
+
+简单的用法，生成时用()括起来
+
+```python
+g=(x*x for x in range(10))
+next(g)
+```
+
+#### yield关键字
+
+fib函数的使用
+
+```python
+def fib(max):
+    n, a, b = 0, 0, 1
+    while n < max:
+        print(b)
+        a, b = b, a + b
+        n = n + 1
+    return 'done'
+
+```
+
+```python
+def fib(max):
+    n,a,b=0,0,1
+    while n<max:
+        yield b
+        a,b=b,a+b
+        n=n+1
+    return 'done'
+```
+
+如果一个函数包含了yield关键字，那么这个函数就不再是一个普通函数，而是一个generator函数，调用之后会返回一个generator
+
+**注：包含yield关键字之后调用之后，如果遇到yield关键字那么就会返回，再次执行时就会从上次返回的yield关键字处继续执行，yield并无特殊语义，它作为一个标志点生效**
+
+### 迭代器
+
+for循环的数据类型有以下几种：
+
+一种是集合数据类型，还有一种是generator，包括生成器和带yield的generator function。这些可以直接作用于for循环的对象统称为**可迭代对象**：Iterable。
+
+**迭代器对象Iterator**：**可以被next()函数调用并不断返回下一个值的对象称为迭代器**
+
+生成器都是Iterator对象，但是list、dict、str虽然是Iterable，却不是Iterator。
+
+## 函数式编程
+
+### 高阶函数
+
+#### map/reduce
+
+map()接收两个参数，一个是函数，一个是Iterable,map将传入的函数依次作用到序列的每个元素，并把结果作为新的Iterator返回。
+
+#### filter
+
+filter()函数也接收一个函数和一个序列，不同的是，filter()把传入的函数依次作用于每个元素，然后根据返回值是True还是False决定保留还是丢弃元素。
+
+
+### 返回函数
+
+### 匿名函数
+
+### 装饰器
+
+### 偏函数
