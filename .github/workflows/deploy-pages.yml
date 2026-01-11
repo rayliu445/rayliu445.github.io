@@ -2,7 +2,7 @@ name: Deploy Pages
 
 on:
   # 推送时执行
-  push:
+  push: 
     branches: [main]
   # pr 时执行
   pull_request:

@@ -220,16 +220,20 @@ m.get('Adam'); // undefined
 
 #### Set
 
-
 ```javascript
 let s2 = new Set([1, 2, 3]); // 含1, 2, 3
 ```
 
-[](javascript:void(0) "复制到剪贴板")
-
 ##### Set常用的一些API
 
+```javascript
+let s = new Set([1, 2, 3, 3, '3']);
+
+```
+
 ### Iterable
+
+在python中这种类型被称为可迭代对象，Array、Map和Set都属于iterable类型。
 
 for...of
 
@@ -290,7 +294,7 @@ function foo(x) {
 foo(10, 20, 30);
 ```
 
-可以看到，js中可以不按照函数规定的参数传递(设计太不优雅了)，还提供了一个关键字arguments
+可以看到，js中可以不按照函数规定的参数传递(灵活性比较高)，还提供了一个关键字**arguments**
 
 #### reset参数
 
@@ -331,9 +335,35 @@ xxx();
 
 **var和let**
 
-var针对的函数，let针对的是块
+var针对的函数，let针对的是块，但是我接触到的项目方法中基本上都用的是const
 
-前面提到过，如果一个变量不用var修饰，那么就有可能会和其他的全局变量冲突。
+前面提到过，如果一个变量不用var或let修饰，那么就有可能会和其他的全局变量冲突。
+
+由于js的方法定义可以嵌套(Python也可以(手动🐶)))，
+
+```javascript
+function foo() {
+    var x = 1;
+    function bar() {
+        var x = 'A';
+        console.log('x in bar() = ' + x); // 'A'
+    }
+    console.log('x in foo() = ' + x); // 1
+    bar();
+}
+
+foo();
+
+```
+
+输出结果是这样
+
+```bash
+x in foo() = 1
+x in bar() = A
+```
+
+可以看到如果变量在内部定义那就以内部为准了，内部可以访问外部变量但是外部想访问内部变量就会报错了
 
 #### 变量提升
 
@@ -352,9 +382,9 @@ foo();
 
 注：
 
-1.使用let 声明变量，遵守strict模式
+1.使用**let** 声明变量，遵守strict模式
 
-2.一定要将声明的变量放置在函数首部
+2.一定要将声明的变量放置在**函数首部**
 
 #### 全局作用域
 
@@ -598,7 +628,7 @@ function lazy_sum(arr) {
 }
 ```
 
-我复制了一下廖大的原文
+我复制了一下廖大的原文，但是说实话没看懂
 
 ```javascript
 在这个例子中，我们在函数lazy_sum中又定义了函数sum，并且，内部函数sum可以引用外部函数lazy_sum的参数和局部变量，当lazy_sum返回函数sum时，相关参数和变量都保存在返回的函数中，这种称为“闭包（Closure）
@@ -610,7 +640,41 @@ function lazy_sum(arr) {
 
 ### Date
 
+```javascript
+let now=new Date();
+now;
+now.getFullYear();
+let d = new Date(2015, 5, 19, 20, 15, 30, 123);//创建一个指定日期和时间的Date对象
+let d = Date.parse('2015-06-24T19:49:22.875+08:00');//符合ISO 8601格式的字符串
+
+```
+
+#### 时区
+
+Date对象表的时间总是按照浏览器所在时区显示，我们既可以显示本地时间，也可以显示调整后的UTC时间
+
+let d = new Date(1435146562875);
+d.toLocaleString(); // '2015/6/24 下午7:49:22'，本地时间（北京时区+8:00），显示的字符串与操作系统设定的格式有关
+d.toUTCString(); // 'Wed, 24 Jun 2015 11:49:22 GMT'，UTC时间，与本地时间相差8小时
+
 ### RegExp
+
+用来匹配字符串的强有力的工具，它的设计思想是用一种描述性的语言来给字符串定义一个规则，凡是符合规则的字符串，就认为它"匹配"了，比如说，检查一个邮箱地址是否合法:
+
+1. 创建一个匹配Email的正则表达式；
+2. 用该正则表达式去匹配用户的输入来判断是否合法。
+
+正则表达式中，如果直接给出字符，就是精确匹配。
+
+1.用\\d可以一个数字;
+
+2.用\\w可以匹配一个字母或者数字;
+
+3.用\.可以匹配任意字符;
+
+4.用*表示任意个字符(包括0个)，用\+表示至少一个字符，用\?表示0个货哦这1个字符，用{n}表示n个字符，用{n,m}表示n到m个数字
+
+来看一个复杂的例子\\d{3}\s
 
 ### JSON
 
@@ -733,7 +797,7 @@ console.log('after setTimeout()');
 
 #### Promise
 
-Promise 是一个表示异**步操作最终完成或失败的对象**，它允许你**注册回调函数来处理操作的结果**
+Promise 是一个表示**异****步操作最终完成或失败的对象**，它允许你**注册回调函数来处理操作的结果**
 
 ```javascript
 let p1 = new Promise(test);
@@ -746,9 +810,6 @@ let p3 = p2.catch(function (reason) {
 ```
 
 Promise最大的好处是在异步执行的流程中，把执行代码和处理结果的代码清晰地分离了：
-
-<!-- ![1738726632955](image/js_learning_note/1738726632955.png) -->
-
 #### async配合await调用Promise
 
 异步函数和Promise可以看作是等价的，在async function内部，用 **`await`调用另一个异步函数**，写起来和同步代码没啥区别，但执行起来是异步的
@@ -777,6 +838,8 @@ function doGet() {
     promise.then(data => {
         // 拿到data
         document.getElementById('test-response-text').value = JSON.stringify(data);
+    }
+}
 ```
 
 ## 异常处理
@@ -813,7 +876,7 @@ main(null);
 
 ### 异步异常处理
 
-回调函数内部处理
+回调函数内部处理，意思就是真正触发的时候才抛出异常
 
 ## JQuery
 
@@ -840,7 +903,51 @@ typeof($); // 'function'
 
 ## underscore
 
+和其他语言一样，js中也有函数式编程，underscore会把自身绑定到唯一的全局变量 ``_``上(和JQuery会把自己绑定到唯一的全局变量 ``$``上)
+
 #### Colletions
+
+##### map/filter
+
+map()和filter()可以作用于Object。当作用于Object时，传入的函数function(value,key)，第一个参数接收value，第二个参数接收key:
+
+```javascript
+let obj = {
+    name: 'bob',
+    school: 'No.1 middle school',
+    address: 'xueyuan road'
+};
+
+let upper = _.map(obj, function (value, key) {
+    return ???;
+});
+
+console.log(JSON.stringify(upper));
+
+```
+
+##### every/some
+
+\_.every()函数返回true，\_.some()函数返回true.
+
+```javascript
+_.every([1,4,7,-3,-9],(x)=>x>0);
+_.some([1,4,7,-3,-9],(x)=>x>0);
+```
+
+##### max/min
+
+这两个函数直接返回集合中最大和最小的数：
+
+##### groupBy
+
+groupBy()把集合的元素按照key分类，key由传入的函数返回
+
+##### shuffle/sample
+
+\_.shuffle([1,2,3,4,5,6]) 洗牌算法随机打乱一个集合
+
+\_.sample([1,2,3,4,5,6],3) 随机选择一个或者多个元素
 
 #### Arrays
 
