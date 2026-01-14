@@ -354,7 +354,7 @@ jQuery('#foo');
 
 文件就是.d.ts
 
-```autoit
+```
 /path/to/project
 ├── src
 |  ├── index.ts
