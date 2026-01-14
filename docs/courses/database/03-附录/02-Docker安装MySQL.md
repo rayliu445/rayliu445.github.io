@@ -1,5 +1,5 @@
 ---
-title: Docker 安装 MySQL 详细步骤
+title: 02-Docker 安装 MySQL 详细步骤
 author: 查尔斯
 date: 2022/10/30 17:36
 categories:
@@ -10,11 +10,10 @@ tags:
  - 容器
 showComment: false
 ---
-
 # Docker 安装 MySQL 详细步骤
 
 ::: tip 笔者说
-笔者下面的步骤及配置是基于指定版本的实践，大多数程序大多数情况下在相差不大的版本时可以直接参考。（当然了，即使是非 Docker 方式安装程序也是一样道理）  
+笔者下面的步骤及配置是基于指定版本的实践，大多数程序大多数情况下在相差不大的版本时可以直接参考。（当然了，即使是非 Docker 方式安装程序也是一样道理）
 :::
 
 ## 拉取镜像
@@ -34,8 +33,7 @@ docker pull mysql:8.0.29
 ## 运行容器
 
 ::: warning 笔者说
-**下方的配置，切记要根据个人实际情况来修改。**  
-:::
+**下方的配置，切记要根据个人实际情况来修改。**:::
 
 - 容器的名称
 - 镜像名称:版本
@@ -145,4 +143,3 @@ services:
       - /opt/disk/docker/volumes/mysql/data:/var/lib/mysql
     privileged: true
 ```
-

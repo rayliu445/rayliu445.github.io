@@ -1,14 +1,31 @@
+---
+title: 01-MyBatis源码
+author: 查尔斯
+date: 2026/01/09 09:00:00
+categories:
+ - Mybatis
+tags:
+ - Mybatis
+showArticleMetadata: false
+editLink: false
+lastUpdated: false
+showComment: false
+---
+# MyBatis源码
+
 ## 背景
 
 优秀的文章推荐
+
 [JDBC规范(JDBC 4.2 规范中文版本)](https://github.com/waylau/jdbc-specification/blob/master/2.Goals.md)
+
 [Mybatis初始化讲解](https://www.cnblogs.com/ZhangZiSheng001/p/12704076.html)
 
 ## MyBatis 启动初始化和查询执行流程
 
 我们总要知道需要从哪里看吧，总不能像个无头苍蝇一样瞎看，否则就是在感动自己，看上去点了点源码，实际上啥也没学到。现在有了AI，可以让AI帮忙圈出重点
 
-## 启动初始化流程
+### 启动初始化流程
 
 #### 1. **SqlSessionFactory 创建阶段**
 

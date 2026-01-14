@@ -19,6 +19,16 @@ export const markdown: MarkdownOptions = {
       let htmlResult = slf.renderToken(tokens, idx, options);
       if (tokens[idx].tag === 'h1') htmlResult += `\n<ClientOnly><ArticleMetadata v-if="($frontmatter?.aside ?? true) && ($frontmatter?.showArticleMetadata ?? true)" :article="$frontmatter" /></ClientOnly>`;
       return htmlResult;
-    }
+    };
+    
+    // 添加 MySQL 语言别名为 SQL，这样 MySQL 代码块就会使用 SQL 的高亮
+    const fence = md.renderer.rules.fence!;
+    md.renderer.rules.fence = (tokens, idx, options, env, renderer) => {
+      const token = tokens[idx];
+      if (token.info.trim() === 'mysql') {
+        token.info = 'sql';
+      }
+      return fence(tokens, idx, options, env, renderer);
+    };
   },
 };

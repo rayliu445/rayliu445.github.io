@@ -15,7 +15,7 @@ export const nav: DefaultTheme.Config['nav'] = [
     text: '我的小册',
     items: [
       { text: 'Java生态', link: '/courses/java/index', activeMatch: '/courses/java/' },
-      { text: '数据库相关', link: '/courses/database/index', activeMatch: '/courses/database/' },
+      { text: '数据库', link: '/courses/database/index', activeMatch: '/courses/database/' },
       { text: '中间件', link: '/courses/middleware/index', activeMatch: '/courses/middleware/' },
       { text: '计算机基础', link: '/courses/csbasics/index', activeMatch: '/courses/csbasics/' },
       { text: '工程架构', link: '/courses/egarchitecture/index', activeMatch: '/courses/egarchitecture/' },
