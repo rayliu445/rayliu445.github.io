@@ -16,7 +16,7 @@ export const sidebar: DefaultTheme.Config['sidebar'] = {
   '/courses/web3/': getItems("courses/web3"),
   '/courses/middleware/': getItems("courses/middleware"),
   '/courses/egarchitecture/': getItems("courses/egarchitecture"),
-  '/notes/code/':getItems("/notes/code")
+  '/notes/code/': getItemsWithoutSubDir("notes/code")
 }
 
 /**
@@ -181,19 +181,22 @@ function getItemsWithoutSubDir(path: string) {
   // 侧边栏项目数组
   let items: DefaultTheme.SidebarItem[] = [];
   
-  // 获取指定路径下的所有 md 文件
+  // 获取指定路径下的所有 md 文件，排除 index.md
   sync(`docs/${path}/*.{md,markdown}`, {
     onlyFiles: true,
     objectMode: true,
   }).forEach((article) => {
-    const articleFile = matter.read(`${article.path}`);
-    const { data } = articleFile;
-    
-    // 添加文章到侧边栏
-    items.push({
-      text: data.title || article.name.replace('.md', ''),
-      link: `/${path}/${article.name.replace('.md', '')}`,
-    });
+    // 排除 index.md 文件
+    if (article.name.toLowerCase() !== 'index.md') {
+      const articleFile = matter.read(`${article.path}`);
+      const { data } = articleFile;
+      
+      // 添加文章到侧边栏
+      items.push({
+        text: data.title || article.name.replace('.md', ''),
+        link: `/${path}/${article.name.replace('.md', '')}`,
+      });
+    }
   });
 
   // 按照文件名排序

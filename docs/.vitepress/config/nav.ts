@@ -23,7 +23,7 @@ export const nav: DefaultTheme.Config['nav'] = [
     ],
     activeMatch: '/courses/'
   },
-  {text:'书籍人生',
+  {text:'朝花夕拾',
     items: [
       { text: '编程', link: '/notes/code/index', activeMatch: '/notes/code/' },
       { text: '社科人文', link: '/notes/life/index', activeMatch: '/notes/life/' }
