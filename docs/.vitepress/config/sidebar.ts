@@ -97,11 +97,15 @@ function getItemsByDate (path: string) {
       collapsed: false,
     });
 
-    // 将最近年份分组展开
-    yearGroups[1].collapsed = false;
+    // 将最近年份分组展开，但需要先确保数组不为空
+    if (yearGroups.length > 0) {
+      yearGroups[1] && (yearGroups[1].collapsed = false);
+    }
   } else {
-    // 将最近年份分组展开
-    yearGroups[0].collapsed = false;
+    // 将最近年份分组展开，但需要先确保数组不为空
+    if (yearGroups.length > 0) {
+      yearGroups[0].collapsed = false;
+    }
   }
 
   // 添加序号
@@ -163,6 +167,56 @@ function getItems (path: string) {
   // 添加序号
   addOrderNumber(groups);
   return groups;
+}
+
+/**
+ * 获取指定路径下的所有文章，无子目录结构
+ * 
+ * 适用于直接在目录下放置 .md 文件的情况
+ * 
+ * @param path 扫描基础路径
+ * @returns {DefaultTheme.SidebarItem[]}
+ */
+function getItemsWithoutSubDir(path: string) {
+  // 侧边栏项目数组
+  let items: DefaultTheme.SidebarItem[] = [];
+  
+  // 获取指定路径下的所有 md 文件
+  sync(`docs/${path}/*.{md,markdown}`, {
+    onlyFiles: true,
+    objectMode: true,
+  }).forEach((article) => {
+    const articleFile = matter.read(`${article.path}`);
+    const { data } = articleFile;
+    
+    // 添加文章到侧边栏
+    items.push({
+      text: data.title || article.name.replace('.md', ''),
+      link: `/${path}/${article.name.replace('.md', '')}`,
+    });
+  });
+
+  // 按照文件名排序
+  items.sort((a, b) => {
+    // 提取文件名部分进行比较，去除路径
+    const aText = a.text.toLowerCase();
+    const bText = b.text.toLowerCase();
+    
+    if (aText < bText) return -1;
+    if (aText > bText) return 1;
+    return 0;
+  });
+
+  // 添加序号
+  addOrderNumber([{
+    items: items
+  }]);
+  
+  return [{
+    text: `文档 (${items.length}篇)`,
+    items: items,
+    collapsed: false,
+  }];
 }
 
 /**

@@ -5,7 +5,7 @@ export const nav: DefaultTheme.Config['nav'] = [
     text: '我的分类',
     items: [
       { text: 'Bug万象集', link: '/categories/issues/index', activeMatch: '/categories/issues/' },
-      { text: '"杂碎"逆袭史', link: '/categories/fragments/index', activeMatch: '/categories/fragments/' },
+      { text: '零碎收集录', link: '/categories/fragments/index', activeMatch: '/categories/fragments/' },
       { text: '工具四海谈', link: '/categories/tools/index', activeMatch: '/categories/tools/' },
       { text: '方案春秋志', link: '/categories/solutions/index', activeMatch: '/categories/solutions/' }
     ],
@@ -23,10 +23,10 @@ export const nav: DefaultTheme.Config['nav'] = [
     ],
     activeMatch: '/courses/'
   },
-  {text:'读书笔记',
+  {text:'书籍人生',
     items: [
       { text: '编程', link: '/notes/code/index', activeMatch: '/notes/code/' },
-      { text: '社科人文', link: '/notes/humanities/index', activeMatch: '/notes/humanities/' }
+      { text: '社科人文', link: '/notes/life/index', activeMatch: '/notes/life/' }
     ],
   },
   {
