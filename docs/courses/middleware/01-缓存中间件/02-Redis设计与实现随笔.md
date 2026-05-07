@@ -290,7 +290,7 @@ typedef struct dictType{
 3. 后退指针
    最后一个跳跃表结点指向前一个结点
 4. 跨度
-   就是从头结点开始到目标结点经历的路径,有点想图的权
+   就是从头结点开始到目标结点经历的路径,有点像图的权
 5. 分值和成员
    分值是一个double类型的浮点数,跳跃表中的所有的结点的分值按照从小大来排序
    ![img](https://raw.githubusercontent.com/aryangzhu/blogImage/master/%E6%88%AA%E5%B1%8F2023-04-05%20%E4%B8%8A%E5%8D%8810.16.54.png)
