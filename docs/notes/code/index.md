@@ -1,6 +1,6 @@
 ---
 title: 编程读书笔记先导
-author: 查尔斯
+author: Ray
 date: 2024/10/01 10:24
 categories:
  - 其他

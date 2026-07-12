@@ -8,7 +8,7 @@ export const sidebar: DefaultTheme.Config['sidebar'] = {
   '/categories/issues/': getItemsByDate("categories/issues"),
   '/categories/fragments/': getItemsByDate("categories/fragments"),
   '/categories/solutions/': getItemsByDate("categories/solutions"),
-  '/categories/tools/': getItemsByDate("categories/tools"),
+  '/categories/tools/': getItems("categories/tools"),
 
   '/courses/csbasics/': getItems("courses/csbasics"),
   '/courses/java/': getItems("courses/java"),
@@ -62,17 +62,18 @@ function getItemsByDate (path: string) {
         }).forEach((article) => {
           const articleFile = matter.read(`${article.path}`);
           const { data } = articleFile;
+          const title = data.title || article.name.replace(/\.md$/, '');
           if (data.isTop) {
             // 向置顶分组前追加标题
             topArticleItems.unshift({
-              text: data.title,
+              text: title,
               link: `/${path}/${year}/${month}/${day}/${article.name.replace('.md', '')}`,
             });
           }
 
           // 向年份分组前追加标题
           articleItems.unshift({
-            text: data.title,
+            text: title,
             link: `/${path}/${year}/${month}/${day}/${article.name.replace('.md', '')}`,
           });
         })
@@ -144,9 +145,10 @@ function getItems (path: string) {
     }).forEach((article) => {
       const articleFile = matter.read(`${article.path}`);
       const { data } = articleFile;
+      const title = data.title || article.name.replace(/\.md$/, '');
       // 向前追加标题
       items.push({
-        text: data.title,
+        text: title,
         link: `/${path}/${groupName}/${article.name.replace('.md', '')}`,
       });
       total += 1;

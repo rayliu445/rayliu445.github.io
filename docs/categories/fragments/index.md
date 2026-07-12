@@ -1,4 +1,5 @@
 ---
+title: 杂碎逆袭史
 showArticleMetadata: false
 editLink: false
 lastUpdated: false

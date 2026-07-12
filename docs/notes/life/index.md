@@ -1,6 +1,6 @@
 ---
 title: 编程之外先导
-author: 查尔斯
+author: Ray
 date: 2020/10/01 10:24
 categories:
  - Java基础快速入门

@@ -1,6 +1,6 @@
 ---
 title: 01-MyBatis源码
-author: 查尔斯
+author: Ray
 date: 2026/01/09 09:00:00
 categories:
  - Mybatis

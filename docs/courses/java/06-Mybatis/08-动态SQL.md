@@ -1,6 +1,6 @@
 ---
 title: 动态SQL
-author: 查尔斯
+author: Ray
 date: 2020/12/29 13:28
 categories:
  - MyBatis快速入门

@@ -17,13 +17,13 @@ showComment: false
         <img alt="码云个人主页" src="https://img.shields.io/badge/码云-Charles7c-C71D23?logo=gitee&logoColor=C71D23" />
     </a> 
     <a href="https://blog.csdn.net/Charles_7c" target="_blank" style="display: inline-block;">
-        <img alt="CSDN个人主页" src="https://img.shields.io/badge/CSDN-查尔斯-FC5531?logo=C&logoColor=FC5531" />
+        <img alt="CSDN个人主页" src="https://img.shields.io/badge/CSDN-Ray-FC5531?logo=C&logoColor=FC5531" />
     </a> 
     <a href="https://juejin.cn/user/685744115170142" target="_blank" style="display: inline-block;">
-        <img alt="掘金个人主页" src="https://img.shields.io/badge/掘金-查尔斯-1E80FF" />
+        <img alt="掘金个人主页" src="https://img.shields.io/badge/掘金-Ray-1E80FF" />
     </a> 
     <a href="https://www.yuque.com/charles7c" target="_blank" style="display: inline-block;">
-        <img alt="语雀个人主页" src="https://img.shields.io/badge/语雀-查尔斯-38D27D" />
+        <img alt="语雀个人主页" src="https://img.shields.io/badge/语雀-Ray-38D27D" />
     </a>  -->
 </p>
 

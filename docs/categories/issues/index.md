@@ -1,4 +1,5 @@
 ---
+title: Bug万象集
 showArticleMetadata: false
 editLink: false
 lastUpdated: false

@@ -1,3 +1,7 @@
+---
+title: 前言
+---
+
 ## 前言
 
 [入门教程](https://es6.ruanyifeng.com/#docs)
